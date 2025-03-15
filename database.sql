@@ -64,7 +64,8 @@ CREATE TABLE users (
     role VARCHAR(50) CHECK (role IN ('Student', 'Teacher', 'Admin')),
     teaching_group_id INT NOT NULL REFERENCES teaching_groups (id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
 
 CREATE TYPE enrollment_status AS ENUM ('active', 'pending', 'cancelled', 'completed');
@@ -105,7 +106,7 @@ CREATE TABLE certificates (
     user_id INT NOT NULL REFERENCES users (id),
     program_id INT NOT NULL REFERENCES programs (id),
     url VARCHAR(255) NOT NULL,
-    issue_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -141,7 +142,7 @@ CREATE TYPE blog_status AS ENUM ('created', 'in moderation', 'published', 'archi
 CREATE TABLE blogs (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users (id),
-    title VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     status blog_status,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
