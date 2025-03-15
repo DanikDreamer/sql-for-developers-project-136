@@ -127,3 +127,23 @@ CREATE TABLE exercises (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE discussions (
+    id SERIAL PRIMARY KEY,
+    lesson_id INT NOT NULL REFERENCES lessons (id),
+    user_id INT NOT NULL REFERENCES users (id),
+    text JSONB NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TYPE blog_status AS ENUM ('created', 'in moderation', 'published', 'archieved');
+CREATE TABLE blogs (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users (id),
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    status blog_status,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
